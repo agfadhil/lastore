@@ -1,12 +1,14 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="{{ url('/admin/home') }}" class="logo"
+    <a href="{{ url('/admin/home') }}" class="logo fad-logo"
        style="font-size: 16px;">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
+          <!-- <img src="{{ asset('images/logo_umb.png') }}" /> -->
            @lang('quickadmin.quickadmin_title')</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">
+        <span class="logo-lg fad-logo-lg">
+          <img class="fad-img-logo" src="{{ asset('images/logo_umb.png') }}" />
            @lang('quickadmin.quickadmin_title')</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->

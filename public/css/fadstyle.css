@@ -1,3 +1,15 @@
 .fad-panel-body {
   height: 80vh;
 }
+
+.fad-logo {
+   /* background-color: #fefefe !impor; */
+}
+
+.fad-logo-lg {
+  width: 100%;
+}
+
+.fad-img-logo {
+  width: 3rem;
+}
