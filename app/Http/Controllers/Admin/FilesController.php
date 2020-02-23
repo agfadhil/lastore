@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\File;
+use App\LogUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -89,6 +90,8 @@ class FilesController extends Controller
 
             $data = $request->all();
             $fileIds = $request->input('filename_id');
+            
+            //$logUpload->save(); 
 
             foreach ($fileIds as $fileId) {
                 $file = File::create([
@@ -106,6 +109,17 @@ class FilesController extends Controller
                 $file->model_id = $file->id;
                 $file->save();
             }
+
+            foreach ($fileIds as $f) {
+                $logUpload = LogUpload::create([
+                    'action' => "add",
+                    'user_id' => Auth::getUser()->id,
+                    'role_id' => Auth::getUser()->role_id,
+                    'folder_id' => $request->input('folder_id'),
+                    'file_id' => $f
+                ]);
+            }
+
             return redirect()->route('admin.files.index');
 
     }
