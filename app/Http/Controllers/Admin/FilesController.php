@@ -19,6 +19,9 @@ class FilesController extends Controller
 {
     use FileUploadTrait;
 
+    // for folder id
+    private $folder_id;
+
     /**
      * Display a listing of File.
      *
@@ -91,7 +94,7 @@ class FilesController extends Controller
             $data = $request->all();
             $fileIds = $request->input('filename_id');
             
-            //$logUpload->save(); 
+            $this->folder_id = $request->input('folder_id');
 
             foreach ($fileIds as $fileId) {
                 $file = File::create([
@@ -101,6 +104,16 @@ class FilesController extends Controller
                     'created_by_id' => Auth::getUser()->id
 
                 ]);
+
+                $logUpload = LogUpload::create([
+                    'action' => "add",
+                    'user_id' => Auth::getUser()->id,
+                    'role_id' => Auth::getUser()->role_id,
+
+                    'folder_id' => $this->folder_id,
+                    // get last uploaded id
+                    'file_id' => $file->id
+                ]);
             }
 
             foreach ($request->input('filename_id', []) as $index => $id) {
@@ -108,16 +121,6 @@ class FilesController extends Controller
                 $file = $model::find($id);
                 $file->model_id = $file->id;
                 $file->save();
-            }
-
-            foreach ($fileIds as $f) {
-                $logUpload = LogUpload::create([
-                    'action' => "add",
-                    'user_id' => Auth::getUser()->id,
-                    'role_id' => Auth::getUser()->role_id,
-                    'folder_id' => $request->input('folder_id'),
-                    'file_id' => $f
-                ]);
             }
 
             return redirect()->route('admin.files.index');
@@ -184,6 +187,16 @@ class FilesController extends Controller
         }
         $file = File::findOrFail($id);
         $file->deletePreservingMedia();
+
+        $logUpload = LogUpload::create([
+            'action' => "delete",
+            'user_id' => Auth::getUser()->id,
+            'role_id' => Auth::getUser()->role_id,
+            
+            'folder_id' => $this->folder_id,
+            // get last uploaded id
+            'file_id' => $id
+        ]);
 
         return redirect()->route('admin.files.index');
     }

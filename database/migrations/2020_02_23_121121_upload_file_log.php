@@ -18,6 +18,7 @@ class UploadFileLog extends Migration
             //id, userid, rolesid, fileid,folderid,date time.
             Schema::create('log_uploads', function(Blueprint $table){
                 $table->increments('id');            
+                $table->timestamp('created_at')->nullable();
                 $table->timestamp('updated_at')->nullable();
                 $table->string('action');
             });
