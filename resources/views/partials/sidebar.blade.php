@@ -67,6 +67,13 @@
             </li>
             @endcan
 
+            <li class="{{ $request->segment(2) == 'logs' ? 'active' : '' }}">
+                <a href="{{ route('admin.logs.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">@lang('quickadmin.logs.title')</span>
+                </a>
+            </li>
+
             <!-- @can('plan_access')
             <li class="{{ $request->segment(2) == 'subscriptions' ? 'active' : '' }}">
                 <a href="{{ route('admin.subscriptions.index') }}">
