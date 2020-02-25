@@ -26,6 +26,19 @@ return [
 		],
 	],
 
+	'logs' => [
+		'title' => 'Logs',
+		'fields' => [
+			'title' => 'Log Data',
+			'id' => 'ID',
+			'user' => 'User',
+			'role' => 'Roles',
+			'file' => 'File',
+			'folder' => 'Folder',
+			'action' => 'Action',
+		],
+	],
+
 	'folders' => [
 		'title' => 'Folders',
 		'fields' => [

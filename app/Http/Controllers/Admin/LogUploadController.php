@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\LogUpload;
+use App\File;
 
 class LogUploadController extends Controller
 {
@@ -16,11 +17,14 @@ class LogUploadController extends Controller
     public function index()
     {
         //
-
-
         $logs = LogUpload::all();
-
+        $logs =  LogUpload::with('file')
+        ->with('folder')
+        ->with('user')
+        ->with('role')
+        ->get();
         return view('admin.logs.index', compact('logs'));
+        
     }
 
     /**
