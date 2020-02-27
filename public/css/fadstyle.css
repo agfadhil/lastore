@@ -2,8 +2,12 @@
   height: 80vh;
 }
 
-.fad-logo {
-   /* background-color: #fefefe !impor; */
+.fad-das-img {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rem;
 }
 
 .fad-logo-lg {
@@ -12,4 +16,14 @@
 
 .fad-img-logo {
   width: 3rem;
+}
+
+@media only screen and (max-width: 760px) {
+  .fad-das-img {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20rem;
+  }
 }
