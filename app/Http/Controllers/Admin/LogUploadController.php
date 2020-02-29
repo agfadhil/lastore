@@ -23,7 +23,8 @@ class LogUploadController extends Controller
         ->with('user')
         ->with('role')
         ->get();
-        return view('admin.logs.index', compact('logs'));
+        $files = File::all();
+        return view('admin.logs.index', compact('logs', 'files'));
         
     }
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use Faker\Provider\Uuid;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
@@ -92,6 +93,7 @@ class FilesController extends Controller
             $request = $this->saveFiles($request);
 
             $data = $request->all();
+            
             $fileIds = $request->input('filename_id');
             
             $this->folder_id = $request->input('folder_id');

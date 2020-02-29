@@ -35,14 +35,24 @@
                 </thead>
                 
                 <tbody>
+                
+                @foreach ($files as $file)
+                    @foreach($file->getMedia('filename') as $m)
+                        @php
+                        $media[] = $m->file_name
+                        @endphp
+                    @endforeach
+                @endforeach
                     @if (count($logs) > 0)
-                        @foreach ($logs as $log)
+                        @foreach ($logs as $i => $log)
+                        
                         
                             <tr data-entry-id="{{ $log->id }}">
                                 <td field-key='id'>{{ $log->id }}</td>
                                 <td field-key='user'>{{ $log->user->name }}</td>
                                 <td field-key='role'>{{ $log->role->title }}</td>
-                                <td field-key='file'>{{ $log->file->uuid }}</td>
+                                
+                                <td field-key='file'>{{ $media[$i] }}</td>
                                 <td field-key='folder'>{{ $log->folder->name }}</td>
                                 <td field-key='action'>{{ $log->action }}</td>
                                     

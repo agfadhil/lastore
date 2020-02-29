@@ -67,12 +67,14 @@
             </li>
             @endcan
 
+            @if (Auth::getUser()->role_id == 1)
             <li class="{{ $request->segment(2) == 'logs' ? 'active' : '' }}">
                 <a href="{{ route('admin.logs.index') }}">
                     <i class="fa fa-gears"></i>
                     <span class="title">@lang('quickadmin.logs.title')</span>
                 </a>
             </li>
+            @endif
 
             <!-- @can('plan_access')
             <li class="{{ $request->segment(2) == 'subscriptions' ? 'active' : '' }}">

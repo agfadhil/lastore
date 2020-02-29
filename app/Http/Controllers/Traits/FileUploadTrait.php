@@ -22,10 +22,13 @@ trait FileUploadTrait
         }
 
         $finalRequest = $request;
-
+        error_log("1");
         foreach ($request->all() as $key => $value) {
+            error_log("2");
             if ($request->hasFile($key)) {
+                error_log("3");
                 if ($request->has($key . '_max_width') && $request->has($key . '_max_height')) {
+                    error_log("4");
                     // Check file width
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
                     $file     = $request->file($key);
@@ -50,6 +53,7 @@ trait FileUploadTrait
                     $image->save($uploadPath . '/' . $filename);
                     $finalRequest = new Request(array_merge($finalRequest->all(), [$key => $filename]));
                 } else {
+                    error_log("5");
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
                     $request->file($key)->move($uploadPath, $filename);
                     $finalRequest = new Request(array_merge($finalRequest->all(), [$key => $filename]));

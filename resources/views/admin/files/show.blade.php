@@ -24,7 +24,7 @@
                             <th>@lang('quickadmin.files.fields.filename')</th>
                             <td field-key='filename's> @foreach($file->getMedia('filename') as $media)
                                 <p class="form-group">
-                                    <a href="{{ $media->getUrl() }}" target="_blank">{{ $media->name }} ({{ $media->size }} KB)</a>
+                                    <a href="{{ $media->getUrl() }}" target="_blank">{{ $media->file_name }} ({{ $media->size }} KB)</a>
                                 </p>
                             @endforeach</td>
                         </tr>

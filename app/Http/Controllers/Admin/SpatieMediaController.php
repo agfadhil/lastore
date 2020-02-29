@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class SpatieMediaController extends Controller
 {
@@ -27,13 +29,18 @@ class SpatieMediaController extends Controller
 
         $files      = $request->file($request->input('file_key'));
         $addedFiles = [];
+        
+        // FUCK! ENCRYPT FILE
         foreach ($files as $file) {
             try {
                 $model->exists     = true;
-                $media             = $model->addMedia($file)->toMediaCollection($request->input('bucket'));
+                $content = base64_encode(Crypt::encrypt(file_get_contents($file)));
+                //var_dump($fileContent);
+                $media             = $model->addMediaFromBase64($content)->usingFileName($file->getClientOriginalName())->toMediaCollection($request->input('bucket'));
+                //$media             = $model->addMedia(Crypt::encrypt(file_get_contents($file)))->toMediaCollection();
                 $addedFiles[]      = $media;
             } catch (\Exception $e) {
-                abort(500, 'Could not upload your file');
+                abort(500, 'Could not upload your file'. $e);
             }
         }
 

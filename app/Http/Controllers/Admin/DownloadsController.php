@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Spatie\MediaLibrary\Media;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
+use finfo;
 
 class DownloadsController extends Controller
 {
@@ -20,7 +23,13 @@ class DownloadsController extends Controller
 
         $media = Media::where('model_id', $file->id)->first();
         $pathToFile = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file->id . DIRECTORY_SEPARATOR . $media->file_name );
-
-        return Response::download($pathToFile);
+        
+        // FUCK! DECRYPT FILE
+        $decryptedContents = Crypt::decrypt(file_get_contents($pathToFile));
+        
+        return response()->make($decryptedContents, 200, array(
+            'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($decryptedContents),
+            'Content-Disposition' => 'attachment; filename="' . pathinfo($media->file_name, PATHINFO_BASENAME) . '"'
+        ));
     }
 }
