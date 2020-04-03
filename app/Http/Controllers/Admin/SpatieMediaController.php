@@ -33,11 +33,10 @@ class SpatieMediaController extends Controller
         // FUCK! ENCRYPT FILE
         foreach ($files as $file) {
             try {
-                $filename = $file->getClientOriginalName();
                 $model->exists     = true;
                 $content = base64_encode(Crypt::encrypt(file_get_contents($file)));
                 //var_dump($fileContent);
-                $media             = $model->addMediaFromBase64($content)->usingName($filename)->toMediaCollection($request->input('bucket'));
+                $media             = $model->addMediaFromBase64($content)->usingFileName($file->getClientOriginalName())->toMediaCollection($request->input('bucket'));
                 //$media             = $model->addMedia(Crypt::encrypt(file_get_contents($file)))->toMediaCollection();
                 $addedFiles[]      = $media;
             } catch (\Exception $e) {
