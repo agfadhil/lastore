@@ -47,3 +47,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
  
 });
+
+
+$this->get('guest-book', 'GuestBookController@index')->name('guest-book.index');
+$this->post('save-feedback', 'GuestBookController@save_feedback')->name('guest-book.save_feedback');
+$this->get('download-feedback', 'GuestBookController@download_feedback')->name('guest-book.download_feedback');
